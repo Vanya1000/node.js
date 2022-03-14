@@ -1,11 +1,10 @@
 import express from "express";
 import mongoose from "mongoose"; // оболочка для упрощения взаимодействия с mongoDB
-import cors from "cors"
+var cors = require('cors')
 import router from "./router.js";
 //? npm run dev запуск!
 
 app.use(cors())
-
 
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb+srv://Vanya1000:08000000@cluster0.wdieh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
