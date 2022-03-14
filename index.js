@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose from "mongoose"; // оболочка для упрощения взаимодействия с mongoDB
+import cors from "cors"
 import router from "./router.js";
 //? npm run dev запуск!
 
-
+app.use(cors())
 
 
 const PORT = process.env.PORT || 5000;
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json()) // express по умолчанию не может преобразовать json и необходимо явно указать
 app.use('/api', router) // Нужно зарегистрировать router
-app.use(require('cors')())
+
 
 
 
