@@ -1,15 +1,18 @@
 import express from "express";
 import mongoose from "mongoose"; // оболочка для упрощения взаимодействия с mongoDB
-var cors = require('cors')
-import router from "./router.js";
-//? npm run dev запуск!
 
-app.use(cors())
+import router from "./router.js";
+
+import cors from "cors"
 
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb+srv://Vanya1000:08000000@cluster0.wdieh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 const app = express()
+
+
+app.use(cors())
+
 
 app.get('/', (req, res) => {
 	console.log(req.query);//принимаем get запросы
@@ -33,3 +36,8 @@ async function startApp() {
 }
 
 startApp()
+
+//? npm run dev запуск!
+// git add.
+// git commit - m "change PORT"
+// git push heroku master
