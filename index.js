@@ -6,7 +6,7 @@ import router from "./router.js";
 
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb+srv://Vanya1000:08000000@cluster0.wdieh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 const app = express()
