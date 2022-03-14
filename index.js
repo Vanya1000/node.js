@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json()) // express по умолчанию не может преобразовать json и необходимо явно указать
 app.use('/api', router) // Нужно зарегистрировать router
-
+app.use(require('cors')())
 
 
 
