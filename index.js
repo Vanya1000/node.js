@@ -39,5 +39,5 @@ startApp()
 
 //? npm run dev запуск!
 // git add.
-// git commit - m "change PORT"
+// git commit -m "change cors"
 // git push heroku master
