@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose"; // оболочка для упрощения взаимодействия с mongoDB
 
-import router from "./router.js";
+import router from "./hours-a-day.router.js";
 
 import cors from "cors"
 
@@ -11,14 +11,15 @@ const DB_URL = 'mongodb+srv://Vanya1000:08000000@cluster0.wdieh.mongodb.net/myFi
 const app = express()
 
 
-app.use(cors())
+
 
 
 app.get('/', (req, res) => {
 	console.log(req.query);//принимаем get запросы
 	res.status(200).json('Server work2')
 }) 
-
+// V middleware module V
+app.use(cors())
 app.use(express.json()) // express по умолчанию не может преобразовать json и необходимо явно указать
 app.use('/api', router) // Нужно зарегистрировать router
 

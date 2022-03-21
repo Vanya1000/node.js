@@ -1,6 +1,6 @@
 import Router from "express"
-import Data from "./data.js";
-import HoursADayController from "./hoursADayController.js";
+import Data from "./Data.js";
+import HoursADayController from "./hours-a-day.controller.js";
 
 const router = new Router()
 
