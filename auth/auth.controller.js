@@ -9,9 +9,10 @@ import KEY from "./config.js";
 
 
 // функция создания токена
-const generateAccessToken = (id, roles) => {
+const generateAccessToken = (id, username, roles) => {
 	const payload = {
 		id,
+		username,
 		roles
 	}
 	return jwt.sign(payload, KEY.secret, { expiresIn: "24h" }) // сколько будет жить токен
@@ -53,7 +54,7 @@ class AuthController {
 			if (!validPassword) {
 				return res.status(400).json({ message: `Invalid password` })
 			}
-			const token = generateAccessToken(user._id, user.roles)// генерируем токен 
+			const token = generateAccessToken(user._id, user.username, user.roles)// генерируем токен 
 			return res.json({ token })
 		} catch (e) {
 			console.log(e);
