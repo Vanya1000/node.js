@@ -5,6 +5,8 @@ import User from "./user.repository.js"
 import { validationResult } from "express-validator" // будет возвращать ошибки полученные в следствии валидации
 import jwt from 'jsonwebtoken' //создание токена
 import KEY from "./config.js";
+import DataForUser from "./data-for-user.repository.js";
+
 
 
 
@@ -55,18 +57,18 @@ class AuthController {
 				return res.status(400).json({ message: `Invalid password` })
 			}
 			const token = generateAccessToken(user._id, user.username, user.roles)// генерируем токен 
-			return res.json({ token })
+			return res.json({ token, id: user._id, user: user.username })
 		} catch (e) {
 			console.log(e);
 			res.status(400).json({ message: 'Login error' })
 		}
 	}
 
-	async getUsers(req, res) {
+	async authMe(req, res) {
 		try {
 			console.log(req.user);
 			const users = await User.findById(req.user.id) // получаю себя по id
-			res.json(users)// возвращаем массив пользователей
+			res.json({ id: users._id, user: users.username})// возвращаем массив пользователей
 		} catch (e) {
 			console.log(e)
 		}

@@ -12,7 +12,7 @@ authRouter.post('/registration', [
 	check('password', "Password should be at least 4 characters").isLength({ min: 4, max: 20 })
 ], AuthController.registration)
 authRouter.post('/login', AuthController.login)
-authRouter.get('/users', authMiddleware, AuthController.getUsers)// добавляем midleware
+authRouter.get('/me', authMiddleware, AuthController.authMe)// добавляем midleware
 
 export default authRouter;
 

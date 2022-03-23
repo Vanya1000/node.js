@@ -1,11 +1,14 @@
-
+import Data from "./hours-a-day.repository.js.js"
 import hoursADayService from "./hours-a-day.service.js"// и теперь вместо создания post внутри контроллера мы просто дергаем метод у service
 // контроллер где ты достаешь всякие query, боди и прочее + валидацию можно сделать и status code отправить, + ошибки ловишь
 
 class HoursADayController {
 	async create(req, res) {
 		try {
-			const hoursADayItem = await hoursADayService.create(req.body) // обращаемся к service => вызываем функцию create и туда передаем post который получаем в теле запроса.
+			const author = req.user.id;
+			console.log(author);
+			const { date, hour } = req.body;
+			const hoursADayItem = await hoursADayService.create({ date, hour, author}) // обращаемся к service => вызываем функцию create и туда передаем post который получаем в теле запроса.
 			res.status(200).json(hoursADayItem) // обратно на клиент возвращаем созданный Item
 		} catch (e) {
 			res.status(500).json(e) // в случае ошибки
@@ -23,7 +26,8 @@ class HoursADayController {
 
 	async getAll(req, res) {
 		try {
-			const hoursADayItemsAll = await hoursADayService.getAll()// получение всего
+			//const hoursADayItemsAll = await hoursADayService.getAll()// получение всего
+			const hoursADayItemsAll = await hoursADayService.getAll(req.user.id)// получение всего
 			return res.status(200).json(hoursADayItemsAll);
 		} catch (e) {
 			res.status(500).json(e)

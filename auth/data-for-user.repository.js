@@ -1,19 +1,14 @@
 import mongoose from "mongoose";
 
 
-/* const userSchema = mongoose.Schema({
-	username: { type: String, unique: true, required: true },
-	password: { type: String, required: true },
-	roles: [{ type: String, ref: 'Role' }]// ссылка на другую сущность
-}); */
-
-const dataForUserSchema = mongoose.Schema({
-	author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // ссылаться на модель user
+const DataForUser = mongoose.Schema({
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // ссылаться на модель user
 	date: { type: String, required: true },
-	hour: { type: String, required: true }
+	hour: { type: String, required: true },
+	dateCreate: {type: Date, default: Date.now}
 });
 
-export const DataForUser = mongoose.model('DataForUser', dataForUserSchema);
+export default mongoose.model('DataForUser', DataForUser);
 /* export const newUser = mongoose.model('newUser', userSchema); */
 
 //Первый аргумент - уникальное имя создаваемой для модели коллекции(Mongoose создаст коллекцию для модели Story),
