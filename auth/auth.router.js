@@ -9,7 +9,7 @@ const authRouter = new Router()
 
 authRouter.post('/registration', [
 	check('username', "Username should not be empty").notEmpty(),
-	check('password', "Password should be at least 4 characters").isLength({ min: 4, max: 20 })
+	check('password', "Password should be at least 4 characters").isLength({ min: 4})
 ], AuthController.registration)
 authRouter.post('/login', AuthController.login)
 authRouter.get('/me', authMiddleware, AuthController.authMe)// добавляем midleware

@@ -27,21 +27,27 @@ class AuthController {
 		try {
 			const errors = validationResult(req) //выцепит из запроса поля и провалидирует
 			if (!errors.isEmpty()) {
-				return res.status(400).json({ message: "Error registration", errors })
+				return res.status(200).json({ resultCode: 1, messages: ["Password should be at least 4 characters"], errors })
 			}
 			const { username, password } = req.body;
 			const candidate = await User.findOne({ username }) // поиск в БД пользователя
 			if (candidate) {
-				return res.status(400).json({ message: "User with this username address already exists"})
+				return res.status(200).json({ resultCode: 1, messages: ["User with this username address already exists"]})
 			} // если нашли, то вернули ошибку
 			const hashPassword = bcrypt.hashSync(password, 7) // хэшируем пароль
 			const userRole = await Role.findOne({ value: "USER" }) // нашли роль
 			const user = new User({ username, password: hashPassword, roles: [userRole.value] })// создали пользователя
 			await user.save()
-			return res.json({ message: 'User has been successfully registered' })
+			return res.json({
+				resultCode: 0,
+				messages: ['User has been successfully registered']
+			})
 		} catch (e) {
 			console.log(e);
-			res.status(400).json({ message: 'Registration error' })
+			res.status(400).json(({
+				resultCode: 1,
+				messages: ['Registration error']
+			}))
 		}
 	}
 
@@ -50,17 +56,17 @@ class AuthController {
 			const { username, password } = req.body
 			const user = await User.findOne({ username })// находим в БД
 			if (!user) {
-				return res.status(400).json({ message: `User ${username} not found!` })
+				return res.status(200).json({ resultCode: 1, messages: [`User ${username} not found!`] })
 			}
 			const validPassword = bcrypt.compareSync(password, user.password)// расхеширование и check пароля
 			if (!validPassword) {
-				return res.status(400).json({ message: `Invalid password` })
+				return res.status(200).json({ resultCode: 1, messages: [`Invalid password`] })
 			}
 			const token = generateAccessToken(user._id, user.username, user.roles)// генерируем токен 
-			return res.json({ token, id: user._id, user: user.username })
+			return res.status(200).json({ resultCode: 0, messages: [], data: {token, id: user._id, user: user.username} })
 		} catch (e) {
 			console.log(e);
-			res.status(400).json({ message: 'Login error' })
+			res.status(400).json({ resultCode: 1, messages: ['Login error'] })
 		}
 	}
 

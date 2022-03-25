@@ -48,7 +48,7 @@ class HoursADayController {
 	async delete(req, res) {
 		try {
 			const deleteHoursADayItem = await hoursADayService.delete(req.params.id)
-			return res.status(200).json(dataWithMongoDB)
+			return res.status(200).json(deleteHoursADayItem)
 		} catch (e) {
 			res.status(500).json(e.message)
 		}
